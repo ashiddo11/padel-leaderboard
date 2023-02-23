@@ -13,21 +13,33 @@ class Home extends Component {
   constructor(props){
     super(props);
     this.state = {
-      bookings: []
+      results: []
     }
   }
   
   
   componentDidMount = async () => {
-    var bookings = await this.props.findAll()
-    this.setState({bookings: bookings})
-  }
-
-  // componentWillMount = async () => {
-  //   var bookings = await this.props.findAll()
-  //   this.setState({bookings: bookings})
-  // }
-    
+    try {
+      var res = await fetch("/api/results/list", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      res = await res.json()
+      if (res.results) {
+        var results = res.results
+        for (let i = 0; i < results.length; i++) {
+          results[i].rank = i+1;
+          results[i].points_per_match = results[i].total_score / results[i].total_matches
+        }
+        this.setState({results: results})
+      }
+      return results
+    } catch (error) {
+      console.error(error)
+    }
+  } 
     
   render() {
     const products = [{
@@ -36,17 +48,23 @@ class Home extends Component {
       price: 199
     }]
     const columns = [{
-      dataField: 'id',
-      text: 'Product ID'
-    }, {
-      dataField: 'name',
-      text: 'Product Name'
-    }, {
-      dataField: 'price',
-      text: 'Product Price'
-    }];    
+      dataField: 'rank',
+      text: 'Rank'
+    },{
+      dataField: 'username',
+      text: 'Username'
+    },{
+      dataField: 'total_score',
+      text: 'Total Score'
+    },{
+      dataField: 'total_matches',
+      text: 'Total Matches'
+    },{
+      dataField: 'points_per_match',
+      text: 'Points per Match'
+    }];
     return (
-      <BootstrapTable keyField='id' data={ products } columns={ columns } />
+      <BootstrapTable keyField='id' data={ this.state.results } columns={ columns } />
     );
   }
 }

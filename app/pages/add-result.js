@@ -53,16 +53,16 @@ class AddBooking extends Component {
           <input type="text" className="form-control" id="winner2" placeholder="Player 2" value={this.state.winner2}
           onChange={this.handleChangeWinner2}/>
           <input type="text" className="form-control" id="winnerScore" placeholder="Winner Score" value={this.state.winnerScore}
-          onChange={this.handleChangeWinner2}/>
+          onChange={this.handleChangeWinnerScore}/>
         </div>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Losing Team</label>
-          <input type="text" className="form-control" id="loser1" placeholder="Player 1" value={this.state.winner1}
-          onChange={this.handleChangeWinner1}/>
-          <input type="text" className="form-control" id="loser2" placeholder="Player 2" value={this.state.winner2}
-          onChange={this.handleChangeWinner2}/>
-          <input type="text" className="form-control" id="loserScore" placeholder="Losing Score" value={this.state.winnerScore}
-          onChange={this.handleChangeWinner2}/>
+          <input type="text" className="form-control" id="loser1" placeholder="Player 1" value={this.state.loser1}
+          onChange={this.handleChangeLoser1}/>
+          <input type="text" className="form-control" id="loser2" placeholder="Player 2" value={this.state.loser2}
+          onChange={this.handleChangeLoser2}/>
+          <input type="text" className="form-control" id="loserScore" placeholder="Losing Score" value={this.state.loserScore}
+          onChange={this.handleChangeLoserScore}/>
         </div>
         <button onClick={async() => {
           console.log("adding")

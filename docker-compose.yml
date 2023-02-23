@@ -8,7 +8,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 'password123' # TODO: Change this
     volumes:
-      - ./mysql:/var/lib/mysql
+      - db1:/var/lib/mysql
     ports:
       - "33066:3306"
 
@@ -27,5 +27,5 @@ services:
       - "mysql:database"
     command: yarn dev
 
-# volumes:
-#   db1:
+volumes:
+  db1:

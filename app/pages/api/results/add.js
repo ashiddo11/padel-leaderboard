@@ -3,12 +3,25 @@ const db = require("../../../models");
 
 export default async function handler(req, res) {
     const body = req.body
-    const Booking = require("../../../models/player")(db.sequelize, DataTypes)
-    console.log("trying")
+    const Player = require("../../../models/player")(db.sequelize, DataTypes)
+    const Match = require("../../../models/match")(db.sequelize, DataTypes)
+    const Result = require("../../../models/result")(db.sequelize, DataTypes)
     try {
-        const booking = await Booking.create({ pitchId: body.pitchId, startTime: body.startTime, playersCount: body.playersCount, total: body.total });
-        console.log("booking's auto-generated ID:", booking.id);
-        res.status(200).json({ success: true, message: `Booking ${booking.id} created successfully!`})
+        const players = await Player.bulkCreate([
+            {username: body.winner1},
+            {username: body.winner2},
+            {username: body.loser1},
+            {username: body.loser2}
+        ], {ignoreDuplicates: true})
+        const match = await Match.create({winner_score: body.winnerScore, loser_score: body.loserScore})
+        console.log("match auto-generated ID:", match.id)
+        const result = await Result.bulkCreate([
+            {match_id: match.id, username: body.winner1, outcome: "Win", score: body.winnerScore, partner: body.winner2} ,
+            {match_id: match.id, username: body.winner2, outcome: "Win", score: body.winnerScore, partner: body.winner1} ,
+            {match_id: match.id, username: body.loser1, outcome: "Loss", score: body.loserScore, partner: body.loser2} ,
+            {match_id: match.id, username: body.loser2, outcome: "Loss", score: body.loserScore, partner: body.loser1} 
+        ])
+        res.status(200).json({ success: true, message: `Match ${match.id} created successfully!`})
     } catch (error) {
         console.error(error)
         res.status(500).json({ success: false, error: error})
