@@ -13,7 +13,7 @@ class Navbar extends Component {
         <div className="container-fluid">
           <Link href="/">
             <a className="navbar-brand" href="#">
-              Payment Tracker
+              RAD Padel Leaderboard
             </a>
           </Link>
           <button
@@ -38,9 +38,6 @@ class Navbar extends Component {
                 <Link href="/add-result">
                   <a className="nav-link active" aria-current="page">Add Result</a>
                 </Link>
-              </li>
-              <li className="nav-item">
-                <button style={{backgroundColor: "red"}} type="button" onClick={() => {this.props.nukeDB()}} className="btn btn-secondary">RECREATE ALL BOOKINGS!!!</button>
               </li>
             </ul>
           </div>
