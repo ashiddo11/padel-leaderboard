@@ -2,7 +2,6 @@ import Head from "next/head";
 import Script from "next/script";
 import React, {Component} from 'react';
 import Navbar from "../components/Navbar";
-import Navbar2 from "../components/Navbar2";
 import '../styles/globals.css'
 const _ = require('lodash'); 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
