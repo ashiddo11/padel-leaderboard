@@ -1,8 +1,9 @@
-import React, {Component, useEffect} from 'react';
+import React, { Component, useEffect } from 'react';
 import BookingCard from "../components/Card";
 import CardGroup from 'react-bootstrap/CardGroup';
 import { useRouter } from 'next/router'
 import BootstrapTable from 'react-bootstrap-table-next';
+import { Table, Card, Loader, Center } from '@mantine/core'
 
 const HomeWithRouter = (props) => {
   const router = useRouter()
@@ -10,16 +11,18 @@ const HomeWithRouter = (props) => {
 }
 
 class Home extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       results: []
     }
   }
-  
-  
+
+
   componentDidMount = async () => {
     try {
+      this.setState({ loading: true })
       var res = await fetch("/api/results/list", {
         method: "GET",
         headers: {
@@ -30,41 +33,53 @@ class Home extends Component {
       if (res.results) {
         var results = res.results
         for (let i = 0; i < results.length; i++) {
-          results[i].rank = i+1;
+          results[i].rank = i + 1;
           results[i].points_per_match = results[i].total_score / results[i].total_matches
         }
-        this.setState({results: results})
+        this.setState({ results: results })
       }
       return results
     } catch (error) {
       console.error(error)
+    } finally {
+      this.setState({ loading: false })
     }
-  } 
-    
+  }
+
   render() {
-    const products = [{
-      id: 1,
-      name: 'abz',
-      price: 199
-    }]
-    const columns = [{
-      dataField: 'rank',
-      text: 'Rank'
-    },{
-      dataField: 'username',
-      text: 'Username'
-    },{
-      dataField: 'total_score',
-      text: 'Total Score'
-    },{
-      dataField: 'total_matches',
-      text: 'Total Matches'
-    },{
-      dataField: 'points_per_match',
-      text: 'Points per Match'
-    }];
+    const rows = this.state.results.map((result) => {
+      return (
+        <tr key={result.username}>
+          <td>{result.rank}</td>
+          <td>{result.username}</td>
+          <td>{result.total_score}</td>
+          <td>{result.total_matches}</td>
+          <td>{result.points_per_match}</td>
+        </tr>
+      )
+    })
     return (
-      <BootstrapTable keyField='id' data={ this.state.results } columns={ columns } />
+      <>
+        <Card shadow="sm" radius="sm" >
+          <Card.Section>
+            <Table striped highlightOnHover withBorder withColumnBorders>
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Username</th>
+                  <th>Total Score</th>
+                  <th>Total Matches</th>
+                  <th>Points per Match</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.loading ? <tr><td colspan={5} align="center" py={20}><Loader variant="dots" size="xl" /></td></tr> : rows}
+                {rows}
+              </tbody>
+            </Table>
+          </Card.Section>
+        </Card>
+      </>
     );
   }
 }

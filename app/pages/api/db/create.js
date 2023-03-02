@@ -9,10 +9,10 @@ export default async function handler(req, res) {
   const Match = require("../../../models/match")(db.sequelize, DataTypes)
   const Result = require("../../../models/result")(db.sequelize, DataTypes)
 
-  db.sequelize.sync({force: false}).then(() => {
-      console.log('Table created successfully!');
-      res.status(200).json({ message: 'Tables created successfully!'})
+  db.sequelize.sync({ force: false }).then(() => {
+    console.log('Table created successfully!');
+    res.status(200).json({ message: 'Tables created successfully!' })
   }).catch((error) => {
-      console.error('Unable to create table : ', error);
+    console.error('Unable to create table : ', error);
   });
 }
