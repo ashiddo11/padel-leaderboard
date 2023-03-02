@@ -1,65 +1,70 @@
-import React, {Component} from 'react';
-import Link from 'next/link';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { useState } from 'react';
+import { createStyles, Header, Container, Group, Burger, rem } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+
+const useStyles = createStyles((theme) => ({
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: '100%',
+  },
+
+  links: {
+    [theme.fn.smallerThan('xs')]: {
+      display: 'none',
+    },
+  },
+
+  burger: {
+    [theme.fn.largerThan('xs')]: {
+      display: 'none',
+    },
+  },
+
+  link: {
+    display: 'block',
+    lineHeight: 1,
+    padding: `${rem(8)} ${rem(12)}`,
+    borderRadius: theme.radius.sm,
+    textDecoration: 'none',
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+    fontSize: theme.fontSizes.sm,
+    fontWeight: 500,
+
+    '&:hover': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+    },
+  },
+}));
 
 
-class Navbar2 extends Component {
-  constructor(props){
-    super(props);
-  }
-  
-  render () {
-    return (
-      <Navbar collapseOnSelect fixed="top" expand="sm" bg="dark" variant="dark">
-        <Container>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav">
-            <Navbar.Collape id="responsive=navbar=nav">
-              <Nav>
-                <Nav.Link href="/">Home</Nav.Link>
-              </Nav>
-            </Navbar.Collape>
-          </Navbar.Toggle>
-        </Container>
-      </Navbar>
-      // <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-      //   <div className="container-fluid">
-      //     <Link href="/">
-      //       <a className="navbar-brand" href="#">
-      //         Payment Tracker
-      //       </a>
-      //     </Link>
-      //     <button
-      //       className="navbar-toggler"
-      //       type="button"
-      //       data-bs-toggle="collapse"
-      //       data-bs-target="#navbarTogglerDemo02"
-      //       aria-controls="navbarTogglerDemo02"
-      //       aria-expanded="false"
-      //       aria-label="Toggle navigation"
-      //     >
-      //       <span className="navbar-toggler-icon"></span>
-      //     </button>
-      //     <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-      //       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-      //         <li className="nav-item">
-      //           <Link href="/">
-      //             <a className="nav-link active" aria-current="page">Home</a>
-      //           </Link>
-      //         </li>
-      //         <li className="nav-item">
-      //           <Link href="/add-booking">
-      //             <a className="nav-link active" aria-current="page">Add Booking</a>
-      //           </Link>
-      //         </li>
-      //         <li className="nav-item">
-      //           <button style={{backgroundColor: "red"}} type="button" onClick={() => {this.props.nukeDB()}} className="btn btn-secondary">RECREATE ALL BOOKINGS!!!</button>
-      //         </li>
-      //       </ul>
-      //     </div>
-      //   </div>
-      // </nav>
-    );
-  }
+export function HeaderSimple({ links }) {
+  const [opened, { toggle }] = useDisclosure(false);
+  const { classes, cx } = useStyles();
+
+  const items = links.map((link) => (
+    <a
+      key={link.label}
+      href={link.link}
+      className={classes.link}
+      onClick={(event) => {
+        event.preventDefault();
+      }}
+    >
+      {link.label}
+    </a>
+  ));
+
+  return (
+    <Header height={60} mb={120}>
+      <Container className={classes.header}>
+        <Group spacing={5} className={classes.links}>
+          {items}
+        </Group>
+
+        <Burger opened={opened} onClick={toggle} className={classes.burger} size="sm" />
+      </Container>
+    </Header>
+  );
 }
-
-export default Navbar2

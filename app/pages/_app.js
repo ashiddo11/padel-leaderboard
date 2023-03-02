@@ -2,8 +2,8 @@ import Head from "next/head";
 import Script from "next/script";
 import React, {Component} from 'react';
 import Navbar from "../components/Navbar";
+import Navbar2 from "../components/Navbar2";
 import '../styles/globals.css'
-import { Schema } from '../utils/schema';
 const _ = require('lodash'); 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
@@ -83,6 +83,7 @@ class MyApp extends Component {
           integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
           crossOrigin="anonymous"
         />
+        
         <Navbar state = {this.state} />
         <Component  bookings={this.state.bookings} onBookingsChange = {this.handleBookingsChange} findAll = {this.findAll} insert = {this.insert}  rootState={this.state}/>
       </>

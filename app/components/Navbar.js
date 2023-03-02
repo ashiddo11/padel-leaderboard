@@ -5,6 +5,9 @@ import Link from 'next/link';
 class Navbar extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      close: true
+    }
   }
   
   render () {
@@ -31,12 +34,16 @@ class Navbar extends Component {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link href="/">
-                  <a className="nav-link active" aria-current="page">Home</a>
+                  <a data-bs-toggle="collapse"
+                      data-bs-target="#navbarTogglerDemo02"
+                      aria-controls="navbarTogglerDemo02" className="nav-link active" aria-current="page">Home</a>
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link href="/add-result">
-                  <a className="nav-link active" aria-current="page">Add Result</a>
+              <li data-toggle="collapse" className="nav-item">
+                <Link data-toggle="collapse" data-bs-target="#navbarTogglerDemo02" href="/add-result">
+                  <a data-bs-toggle="collapse"
+                      data-bs-target="#navbarTogglerDemo02"
+                      aria-controls="navbarTogglerDemo02" className="nav-link active" aria-current="page">Add Result</a>
                 </Link>
               </li>
             </ul>
