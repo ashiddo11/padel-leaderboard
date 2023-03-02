@@ -31,7 +31,7 @@ class Home extends Component {
         var results = res.results
         for (let i = 0; i < results.length; i++) {
           results[i].rank = i + 1;
-          results[i].points_per_match = results[i].total_score / results[i].total_matches
+          results[i].points_per_match = (results[i].total_score / results[i].total_matches).toFixed(2);
         }
         this.setState({ results: results })
       }
