@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { useRouter } from 'next/router'
+import { SimpleGrid, Card, Title, Group, TextInput, Center } from '@mantine/core'
 
 const AddBookingWithRouter = (props) => {
   const router = useRouter()
@@ -8,7 +9,7 @@ const AddBookingWithRouter = (props) => {
 
 class AddBooking extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       winner1: '',
@@ -25,64 +26,76 @@ class AddBooking extends Component {
   }
 
   handleChangeWinner1(event) {
-    this.setState({winner1: event.target.value});
+    this.setState({ winner1: event.target.value });
   }
   handleChangeWinner2(event) {
-    this.setState({winner2: event.target.value});
+    this.setState({ winner2: event.target.value });
   }
   handleChangeWinnerScore(event) {
-    this.setState({winnerScore: event.target.value});
+    this.setState({ winnerScore: event.target.value });
   }
   handleChangeLoser1(event) {
-    this.setState({loser1: event.target.value});
+    this.setState({ loser1: event.target.value });
   }
   handleChangeLoser2(event) {
-    this.setState({loser2: event.target.value});
+    this.setState({ loser2: event.target.value });
   }
   handleChangeLoserScore(event) {
-    this.setState({loserScore: event.target.value});
+    this.setState({ loserScore: event.target.value });
   }
 
   render() {
     return (
       <form>
-        <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Winning Team</label>
-          <input type="text" className="form-control" id="winner1" placeholder="Player 1" value={this.state.winner1}
-          onChange={this.handleChangeWinner1}/>
-          <input type="text" className="form-control" id="winner2" placeholder="Player 2" value={this.state.winner2}
-          onChange={this.handleChangeWinner2}/>
-          <input type="text" className="form-control" id="winnerScore" placeholder="Winner Score" value={this.state.winnerScore}
-          onChange={this.handleChangeWinnerScore}/>
-        </div>
-        <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Losing Team</label>
-          <input type="text" className="form-control" id="loser1" placeholder="Player 1" value={this.state.loser1}
-          onChange={this.handleChangeLoser1}/>
-          <input type="text" className="form-control" id="loser2" placeholder="Player 2" value={this.state.loser2}
-          onChange={this.handleChangeLoser2}/>
-          <input type="text" className="form-control" id="loserScore" placeholder="Losing Score" value={this.state.loserScore}
-          onChange={this.handleChangeLoserScore}/>
-        </div>
-        <button onClick={async() => {
-          console.log("adding")
-          let data = {
-            "winner1": this.state.winner1,
-            "winner2": this.state.winner2,
-            "winnerScore": this.state.winnerScore,
-            "loser1": this.state.loser1,
-            "loser2": this.state.loser2,
-            "loserScore": this.state.loserScore
-          }
-          const res = await fetch("/api/results/add", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json; charset=utf8"
-            },
-            body: JSON.stringify(data)
-          })
-          await this.props.router.push("/#")
+        <SimpleGrid cols={2}>
+          <Title order={3} align="center">Winning Team</Title>
+          <Title order={3} align="center">Losing Team</Title>
+        </SimpleGrid>
+        <SimpleGrid cols={2} mt={10}>
+          <Card p="xl" withBorder>
+            <Card.Section inheritPadding py="xs">
+              <TextInput id="winner1" label="Winner 1" placeholder="Player 1" value={this.state.winner1} onChange={this.handleChangeWinner1} />
+            </Card.Section>
+            <Card.Section inheritPadding py="xs">
+              <TextInput id="winner2" label="Winner 2" placeholder="Player 2" value={this.state.winner2} onChange={this.handleChangeWinner2} />
+            </Card.Section>
+            <Card.Section inheritPadding py="xs">
+              <TextInput id="winnerScore" label="Winner Score" placeholder="Winning Score" value={this.state.winnerScore} onChange={this.handleChangeWinnerScore} />
+            </Card.Section>
+          </Card>
+          <Card p="xl" withBorder>
+            <Card.Section inheritPadding py="xs">
+              <TextInput id="loser1" label="loser 1" placeholder="Player 1" value={this.state.loser1} onChange={this.handleChangeloser1} />
+            </Card.Section>
+            <Card.Section inheritPadding py="xs">
+              <TextInput id="loser2" label="loser 2" placeholder="Player 2" value={this.state.loser2} onChange={this.handleChangeloser2} />
+            </Card.Section>
+            <Card.Section inheritPadding py="xs">
+              <TextInput id="loserScore" label="Loser Score" placeholder="Losing Score" value={this.state.loserScore} onChange={this.handleChangeLoserScore} />
+            </Card.Section>
+          </Card>
+        </SimpleGrid>
+        <Center mt={20}>
+          <button onClick={async () => {
+            console.log("adding")
+            let data = {
+              "winner1": this.state.winner1,
+              "winner2": this.state.winner2,
+              "winnerScore": this.state.winnerScore,
+              "loser1": this.state.loser1,
+              "loser2": this.state.loser2,
+              "loserScore": this.state.loserScore
+            }
+            const res = await fetch("/api/results/add", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json; charset=utf8"
+              },
+              body: JSON.stringify(data)
+            })
+            await this.props.router.push("/#")
           }} type="submit" className="btn btn-primary">Submit</button>
+        </Center>
       </form>
     );
   }
