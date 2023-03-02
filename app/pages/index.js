@@ -1,8 +1,5 @@
 import React, { Component, useEffect } from 'react';
-import BookingCard from "../components/Card";
-import CardGroup from 'react-bootstrap/CardGroup';
 import { useRouter } from 'next/router'
-import BootstrapTable from 'react-bootstrap-table-next';
 import { Table, Card, Loader, Center } from '@mantine/core'
 
 const HomeWithRouter = (props) => {
