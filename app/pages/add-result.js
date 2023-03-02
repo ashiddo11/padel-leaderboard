@@ -15,6 +15,9 @@ class AddBooking extends Component {
       winner1: '',
       winner2: '',
       winnerScore: '',
+      loserScore: '',
+      loser1: '',
+      loser2: '',
       totalAmount: ''
     }
     this.handleChangeWinner1 = this.handleChangeWinner1.bind(this);
@@ -65,10 +68,10 @@ class AddBooking extends Component {
           </Card>
           <Card p="xl" withBorder>
             <Card.Section inheritPadding py="xs">
-              <TextInput id="loser1" label="loser 1" placeholder="Player 1" value={this.state.loser1} onChange={this.handleChangeloser1} />
+              <TextInput id="loser1" label="loser 1" placeholder="Player 1" value={this.state.loser1} onChange={this.handleChangeLoser1} />
             </Card.Section>
             <Card.Section inheritPadding py="xs">
-              <TextInput id="loser2" label="loser 2" placeholder="Player 2" value={this.state.loser2} onChange={this.handleChangeloser2} />
+              <TextInput id="loser2" label="loser 2" placeholder="Player 2" value={this.state.loser2} onChange={this.handleChangeLoser2} />
             </Card.Section>
             <Card.Section inheritPadding py="xs">
               <TextInput id="loserScore" label="Loser Score" placeholder="Losing Score" value={this.state.loserScore} onChange={this.handleChangeLoserScore} />
@@ -86,6 +89,7 @@ class AddBooking extends Component {
               "loser2": this.state.loser2,
               "loserScore": this.state.loserScore
             }
+            console.log(data)
             const res = await fetch("/api/results/add", {
               method: "POST",
               headers: {

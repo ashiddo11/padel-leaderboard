@@ -1,49 +1,58 @@
 import React, {Component} from 'react';
 import Link from 'next/link';
+import { useRef } from "react";
 
 
-class Navbar extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      close: true
-    }
+
+// class Navbar extends Component {
+
+
+export const Navbar = () => {
+  const navButton = useRef(null);
+  const linksContainerRef = useRef(null);
+  function collapseNav() {
+    navButton.current.classList.add("collapsed");
+    linksContainerRef.current.classList.remove("show");
   }
   
-  render () {
+  
+  
+  // render () {
+    
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div className="container-fluid">
-          <Link href="/">
+          <Link onClick={collapseNav} href="/">
             <a className="navbar-brand" href="#">
               RAD Padel Leaderboard
             </a>
           </Link>
           <button
+            ref={navButton}
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarTogglerDemo02"
-            aria-controls="navbarTogglerDemo02"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <div
+          ref={linksContainerRef}
+          className="collapse navbar-collapse"
+          id="navbarNav"
+          >
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link href="/">
-                  <a data-bs-toggle="collapse"
-                      data-bs-target="#navbarTogglerDemo02"
-                      aria-controls="navbarTogglerDemo02" className="nav-link active" aria-current="page">Home</a>
+                  <a  onClick={collapseNav} aria-current="page" className="nav-link active">Home</a>
                 </Link>
               </li>
-              <li data-toggle="collapse" className="nav-item">
-                <Link data-toggle="collapse" data-bs-target="#navbarTogglerDemo02" href="/add-result">
-                  <a data-bs-toggle="collapse"
-                      data-bs-target="#navbarTogglerDemo02"
-                      aria-controls="navbarTogglerDemo02" className="nav-link active" aria-current="page">Add Result</a>
+              <li className="nav-item">
+                <Link  href="/add-result">
+                  <a onClick={collapseNav} aria-current="page" className="nav-link active">Add Result</a>
                 </Link>
               </li>
             </ul>
@@ -52,6 +61,5 @@ class Navbar extends Component {
       </nav>
     );
   }
-}
 
 export default Navbar

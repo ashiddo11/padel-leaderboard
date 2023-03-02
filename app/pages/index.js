@@ -70,8 +70,7 @@ class Home extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.state.loading ? <tr><td colspan={5} align="center" py={20}><Loader variant="dots" size="xl" /></td></tr> : rows}
-                {rows}
+                {this.state.loading ? <tr><td colSpan={5} align="center" py={20}><Loader variant="dots" size="xl" /></td></tr> : rows}
               </tbody>
             </Table>
           </Card.Section>
