@@ -53,6 +53,7 @@ export default function Player() {
                     <td>Outcome</td>
                     <td>Partner</td>
                     <td>Score</td>
+                    <td>Opponents</td>
                 </tr>
                 {Object.keys(matchResults).map((key, index) => { 
                     return(
@@ -61,6 +62,7 @@ export default function Player() {
                         <td>{matchResults[index].outcome}</td>
                         <td>{matchResults[index].partner}</td>
                         <td>{`${matchResults[index].score} - ${matchResults[index].loserScore}`}</td>
+                        <td>{matchResults[index].opponents[0]}, {matchResults[index].opponents[1]}</td>
                     </tr>
                     )
                 })
