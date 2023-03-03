@@ -1,6 +1,7 @@
 import React, { Component, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import { Table, Card, Loader, Center } from '@mantine/core'
+import Link from 'next/link';
 
 const HomeWithRouter = (props) => {
   const router = useRouter()
@@ -46,6 +47,7 @@ class Home extends Component {
   render() {
     const rows = this.state.results.map((result) => {
       return (
+        <Link href={{pathname: "/player", query:{player: result.username}}}>
         <tr key={result.username}>
           <td>{result.rank}</td>
           <td>{result.username}</td>
@@ -53,6 +55,8 @@ class Home extends Component {
           <td>{result.total_matches}</td>
           <td>{result.points_per_match}</td>
         </tr>
+        </Link>
+        
       )
     })
     return (
