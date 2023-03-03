@@ -56,7 +56,7 @@ export default function Player() {
                 </tr>
                 {Object.keys(matchResults).map((key, index) => { 
                     return(
-                    <tr>
+                    <tr key={`${index}`}>
                         <td>{matchResults[index].match_id}</td>
                         <td>{matchResults[index].outcome}</td>
                         <td>{matchResults[index].partner}</td>

@@ -47,7 +47,7 @@ class Home extends Component {
   render() {
     const rows = this.state.results.map((result) => {
       return (
-        <Link href={{pathname: "/player", query:{player: result.username}}}>
+        <Link key={result.username} href={{pathname: "/player", query:{player: result.username}}}>
         <tr key={result.username}>
           <td>{result.rank}</td>
           <td>{result.username}</td>
