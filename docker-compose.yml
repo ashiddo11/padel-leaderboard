@@ -1,0 +1,31 @@
+version: '2'
+services:
+  mysql:
+    platform: linux/x86_64
+    container_name: mysql
+    restart: always
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password123' # TODO: Change this
+    volumes:
+      - db1:/var/lib/mysql
+    ports:
+      - "33066:3306"
+
+  frontend:
+    build: ./app/
+    volumes:
+      - ./app/pages:/src/pages
+      - ./app/pages/api:/src/pages/api
+      - ./app/models:/src/models
+      - ./app/styles:/src/styles
+      - ./app/public:/src/public
+      - ./app/components:/src/components
+    ports:
+      - "3000:3000"
+    links:
+      - "mysql:database"
+    command: yarn dev
+
+volumes:
+  db1:
